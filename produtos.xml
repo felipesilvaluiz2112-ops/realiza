@@ -66,4 +66,12 @@
         <descricao>Bolsa transversal moderna em couro ecológico.</descricao>
         <promocao>Últimas Peças</promocao>
     </produto>
+    <produto>
+        <categoria>acessorios</categoria>
+        <nome>Bolsa Urban Leathersasasa</nome>
+        <preco>120.00</preco>
+        <imagem>https://images.unsplash.com/photo-1544816155-12df9643f363?w=500</imagem>
+        <descricao>Bolsa transversal moderna em couro ecológico.</descricao>
+        <promocao>Últimas Peças</promocao>
+    </produto>
 </produtos>
