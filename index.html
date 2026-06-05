@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REALIZA Fashion - Sua Loja de Roupas</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        .btn-remover {
+            background-color: #ff4d4d; color: white; border: none; padding: 5px 10px;
+            border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.9em;
+            transition: background 0.2s; margin-left: 15px;
+        }
+        .btn-remover:hover { background-color: #cc0000; }
+        .item-carrinho-info { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+
+        .nav-inferior {
+            position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--azul-marinho);
+            border-top: 3px solid var(--dourado); display: flex; justify-content: space-around;
+            align-items: center; padding: 12px 0; z-index: 999; box-shadow: 0 -4px 10px rgba(0,0,0,0.15);
+        }
+        .btn-nav-inf {
+            background: none; border: none; color: white; font-weight: bold; font-size: 1em;
+            cursor: pointer; text-decoration: none; flex: 1; text-align: center;
+        }
+        .btn-nav-inf:hover, .btn-nav-inf.ativo { color: var(--dourado); }
+        body { padding-bottom: 90px; background-color: var(--cinza-claro); }
+        .btn-fale-conosco { bottom: 80px !important; }
+        #pagina-carrinho { display: none; background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body>
+
+    <header id="topo">
+        <img src="logo.jpg" alt="Logo REALIZA" class="logo-site">
+        <h1>REALIZA Fashion</h1>
+    </header>
+
+    <div class="nav-bar">
+        <a href="#" class="nav-link" onclick="mostrarLoja()">🏠 Voltar para a Loja</a>
+        <button class="btn-ver-carrinho" onclick="mostrarCarrinho()">🛒 Seu Carrinho (<span id="contador-carrinho">0</span>)</button>
+    </div>
+
+    <div id="pagina-loja">
+        <section class="banner-principal">
+            <h2>Moda que Transforma</h2>
+            <p>Encontre os melhores looks para realizar os seus planos com muito estilo e sofisticação.</p>
+            <button class="btn-comprar" style="display: inline-block; padding: 12px 30px; border-radius: 50px; width: auto;" onclick="document.getElementById('promocoes').scrollIntoView();">Ver Ofertas da Semana</button>
+        </section>
+
+        <main style="max-width: 1100px; margin: auto; padding: 20px;">
+            <h2 class="titulo-secao" id="promocoes">🔥 Promoções da Semana 🔥</h2>
+            <div class="vitrine">
+                
+                <div class="card-produto">
+                    <span class="tag-promocao">20% OFF</span>
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" alt="Casaco" class="foto-roupa" style="width: 100%; height: 220px; object-fit: contain;">
+                    <div class="info-produto">
+                        <h3>Casaco Outono Soft</h3>
+                        <p class="preco-antigo">R$ 239,90</p>
+                        <p class="preco-novo">R$ 189.90</p>
+                    </div>
+                    <button class="btn-comprar" style="border-radius:0;" onclick="adicionarAoCarrinho('Casaco Outono Soft', 189.90)"> Garanter Desconto</button>
+                </div>
+
+                <div class="card-produto">
+                    <span class="tag-promocao">Leve 2 por 1</span>
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500" alt="Jaqueta" class="foto-roupa" style="width: 100%; height: 220px; object-fit: contain;">
+                    <div class="info-produto">
+                        <h3>Jaqueta Casual Premium</h3>
+                        <p class="preco-antigo">R$ 349,90</p>
+                        <p class="preco-novo">R$ 249.90</p>
+                    </div>
+                    <button class="btn-comprar" style="border-radius:0;" onclick="adicionarAoCarrinho('Jaqueta Casual Premium', 249.90)"> Garantir Desconto</button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <main id="pagina-carrinho" style="max-width: 1100px; margin: 40px auto; padding: 20px;">
+        <h2 class="titulo-secao" style="margin-top:0;">🛒 Seu Carrinho de Compras</h2>
+        <div id="lista-itens-carrinho"></div>
+        <div class="total-carrinho">Total: R$ <span id="valor-total">0.00</span></div>
+        <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+            <button class="btn-comprar" style="width: auto; background-color:#aaa; color:white;" onclick="mostrarLoja()">← Continuar Comprando</button>
+            <button class="btn-finalizar" onclick="enviarPedidoWhatsapp()" style="border:none; cursor:pointer; background-color: var(--azul-marinho); color: white; padding: 15px 30px; font-weight: bold; border-radius: 6px;">Finalizar Pedido via WhatsApp →</button>
+        </div>
+    </main>
+
+    <a href="https://wa.me/5541888755268?text=Ol%C3%A1!%20Gostaria%20de%20tirar%20uma%20d%C3%BAvida." target="_blank" class="btn-fale-conosco">💬 Fale Conosco</a>
+
+    <nav class="nav-inferior">
+        <a href="index.html" class="btn-nav-inf ativo">🏠 Início</a>
+        <a href="tipo.html" class="btn-nav-inf">🏷️ Tipo</a>
+        <a href="historia.html" class="btn-nav-inf">📖 História</a>
+    </nav>
+
+    <footer>
+        <p>&copy; 2026 REALIZA Fashion - Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Carrega o carrinho compartilhado assim que a página abre
+        let carrinho = JSON.parse(localStorage.getItem('carrinhoCompartilhado')) || [];
+
+        window.onload = function() {
+            atualizarContador();
+            atualizarInterfaceCarrinho();
+        }
+
+        function adicionarAoCarrinho(nome, preco) {
+            carrinho.push({ nome: nome, preco: preco });
+            salvarLocalStorage();
+            atualizarContador();
+            mostrarCarrinho();
+        }
+
+        function removerDoCarrinho(index) {
+            carrinho.splice(index, 1); 
+            salvarLocalStorage();
+            atualizarContador();
+            atualizarInterfaceCarrinho(); 
+        }
+
+        function salvarLocalStorage() {
+            localStorage.setItem('carrinhoCompartilhado', JSON.stringify(carrinho));
+        }
+
+        function atualizarContador() {
+            document.getElementById('contador-carrinho').innerText = carrinho.length;
+        }
+
+        function mostrarCarrinho() {
+            document.getElementById('pagina-loja').style.display = 'none';
+            document.getElementById('pagina-carrinho').style.display = 'block';
+            atualizarInterfaceCarrinho();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function mostrarLoja() {
+            document.getElementById('pagina-carrinho').style.display = 'none';
+            document.getElementById('pagina-loja').style.display = 'block';
+        }
+
+        function atualizarInterfaceCarrinho() {
+            const containerLista = document.getElementById('lista-itens-carrinho');
+            const containerTotal = document.getElementById('valor-total');
+            
+            if (carrinho.length === 0) {
+                containerLista.innerHTML = '<p style="text-align:center; color:#888;">Seu carrinho está vazio no momento.</p>';
+                containerTotal.innerText = '0.00';
+                return;
+            }
+
+            let htmlItens = ''; let total = 0;
+            carrinho.forEach((item, index) => {
+                htmlItens += `
+                    <div class="item-carrinho">
+                        <div class="item-carrinho-info">
+                            <span>👕 ${item.nome}</span>
+                            <strong>R$ ${item.preco.toFixed(2)}</strong>
+                        </div>
+                        <button class="btn-remover" onclick="removerDoCarrinho(${index})">X</button>
+                    </div>`;
+                total += item.preco;
+            });
+
+            containerLista.innerHTML = htmlItens;
+            containerTotal.innerText = total.toFixed(2);
+        }
+
+        function enviarPedidoWhatsapp() {
+            if (carrinho.length === 0) { alert("Seu carrinho está vazio!"); return; }
+            let numeroWhats = "5541888755268";
+            let texto = "Olá Realiza Fashion! Vim concluir minha compra:\n\n";
+            let total = 0;
+
+            carrinho.forEach((item, index) => {
+                texto += `${index + 1}. 👔 ${item.nome} - R$ ${item.preco.toFixed(2)}\n`;
+                total += item.preco;
+            });
+            texto += `\n💰 *Total do Pedido:* R$ ${total.toFixed(2)}`;
+
+            let linkFinal = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(texto)}`;
+            window.open(linkFinal, '_blank');
+        }
+    </script>
+</body>
+</html>

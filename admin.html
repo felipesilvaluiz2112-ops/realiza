@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REALIZA Fashion - Painel de Controle</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        body { background-color: var(--cinza-claro); color: var(--texto-escuro); padding-bottom: 60px; }
+        .container-admin { max-width: 800px; margin: 40px auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.05); }
+        .form-grupo { margin-bottom: 15px; display: flex; flex-direction: column; }
+        .form-grupo label { font-weight: bold; margin-bottom: 5px; color: var(--azul-marinho); }
+        .form-grupo input, .form-grupo select, .form-grupo textarea { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em; }
+        .btn-salvar { background-color: var(--azul-marinho); color: white; border: none; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; font-size: 1em; }
+        .btn-salvar:hover { background-color: var(--dourado); color: var(--azul-marinho); }
+        
+        .tabela-produtos { width: 100%; border-collapse: collapse; margin-top: 30px; }
+        .tabela-produtos th, .tabela-produtos td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .tabela-produtos th { background-color: var(--azul-marinho); color: white; }
+        .btn-excluir { background-color: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-excluir:hover { background-color: #cc0000; }
+        .mini-foto { width: 50px; height: 50px; object-fit: contain; background: #f4f6f9; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <header style="background-color: var(--azul-marinho); border-bottom: 5px solid var(--dourado); text-align: center; color: white; padding: 20px;">
+        <h1>Painel Administrativo - REALIZA</h1>
+        <p>Adicione ou remova os produtos cadastrados no site</p>
+    </header>
+
+    <div class="container-admin">
+        <h2>✨ Cadastrar Novo Produto</h2>
+        <form id="form-produto" onsubmit="adicionarProduto(event)">
+            <div class="form-grupo">
+                <label for="nome">Nome do Produto:</label>
+                <input type="text" id="nome" required placeholder="Ex: Vestido Sedutor Vermelho">
+            </div>
+            
+            <div class="form-grupo">
+                <label for="categoria">Categoria (Tipo):</label>
+                <select id="categoria" required>
+                    <option value="feminino">Feminino</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="infantil">Infantil</option>
+                    <option value="acessorios">Acessórios</option>
+                </select>
+            </div>
+
+            <div class="form-grupo">
+                <label for="preco">Preço (R$):</label>
+                <input type="number" id="preco" step="0.01" required placeholder="Ex: 149.90">
+            </div>
+
+            <div class="form-grupo">
+                <label for="imagem">Link da Imagem (URL):</label>
+                <input type="url" id="imagem" required placeholder="Cole o link da foto aqui">
+            </div>
+
+            <div class="form-grupo">
+                <label for="promocao">Tag de Promoção/Destaque:</label>
+                <input type="text" id="promocao" placeholder="Ex: 20% OFF, Novidade, Tendência">
+            </div>
+
+            <div class="form-grupo">
+                <label for="descricao">Descrição Detalhada:</label>
+                <textarea id="descricao" rows="3" required placeholder="Descreva os detalhes da roupa..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-salvar">📦 Cadastrar Produto</button>
+        </form>
+
+        <hr style="margin: 40px 0; border: 0; border-top: 2px dashed #ddd;">
+
+        <h2>📋 Produtos Cadastrados</h2>
+        <table class="tabela-produtos">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-tabela">
+                </tbody>
+        </table>
+        
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="tipo.html" style="color: var(--azul-marinho); font-weight: bold; text-decoration: none;">← Voltar para a Vitrine de Tipos</a>
+        </div>
+    </div>
+
+    <script>
+        // Lista padrão caso o banco local esteja vazio
+        const produtosIniciais = [
+            { categoria: "feminino", nome: "Vestido Minimalist Green", preco: 159.90, imagem: "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=500", descricao: "Vestido leve de algodão orgânico, ideal para dias quentes. Possui caimento fluido.", promocao: "Novidade" },
+            { categoria: "feminino", nome: "Blusa Seda Soft", preco: 119.90, imagem: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500", descricao: "Blusa elegante em seda acetinada com caimento fluido e toque macio.", promocao: "15% OFF" },
+            { categoria: "masculino", nome: "Sobretudo Elegance", preco: 299.90, imagem: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500", descricao: "Sobretudo masculino de lã batida premium. Perfeito para o inverno.", promocao: "Destaque" },
+            { categoria: "masculino", nome: "Camisa Casual Clean", preco: 139.90, imagem: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500", descricao: "Camisa leve de linho manga longa, ideal para ocasiões formais ou casuais.", promocao: "Linho" },
+            { categoria: "infantil", nome: "Conjunto Kids Comfort", preco: 89.90, imagem: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=500", descricao: "Conjunto de moletom infantil super macio e confortável para o dia a dia.", promocao: "Oferta" },
+            { categoria: "infantil", nome: "Vestido Kids Pop", preco: 79.90, imagem: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=500", descricao: "Vestido infantil colorido em algodão leve e antialérgico.", promocao: "Fofura" },
+            { categoria: "acessorios", nome: "Bolsa Urban Leather", preco: 120.00, imagem: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=500", descricao: "Bolsa transversal moderna em couro ecológico.", promocao: "Últimas Peças" },
+            { categoria: "acessorios", nome: "Relógio Minimalist", preco: 180.00, imagem: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500", descricao: "Relógio de pulso clássico com pulseira de couro ajustável e design limpo.", promocao: "Premium" }
+        ];
+
+        // Puxa os dados atuais da memória ou define os iniciais
+        let dbProdutos = JSON.parse(localStorage.getItem('bancoProdutos')) || produtosIniciais;
+        if(!localStorage.getItem('bancoProdutos')) {
+            localStorage.setItem('bancoProdutos', JSON.stringify(dbProdutos));
+        }
+
+        window.onload = function() {
+            atualizarTabela();
+        };
+
+        function atualizarTabela() {
+            const corpo = document.getElementById('corpo-tabela');
+            corpo.innerHTML = '';
+
+            dbProdutos.forEach((prod, index) => {
+                corpo.innerHTML += `
+                    <tr>
+                        <td><img src="${prod.imagem}" class="mini-foto"></td>
+                        <td><strong>${prod.nome}</strong></td>
+                        <td style="text-transform: capitalize;">${prod.categoria}</td>
+                        <td>R$ ${prod.preco.toFixed(2)}</td>
+                        <td><button class="btn-excluir" onclick="removerProduto(${index})">Remover</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function adicionarProduto(event) {
+            event.preventDefault();
+
+            let novoProd = {
+                categoria: document.getElementById('categoria').value,
+                nome: document.getElementById('nome').value,
+                preco: parseFloat(document.getElementById('preco').value),
+                imagem: document.getElementById('imagem').value,
+                descricao: document.getElementById('descricao').value,
+                promocao: document.getElementById('promocao').value || "Destaque"
+            };
+
+            dbProdutos.push(novoProd);
+            localStorage.setItem('bancoProdutos', JSON.stringify(dbProdutos));
+            
+            atualizarTabela();
+            document.getElementById('form-produto').reset();
+            alert("Produto cadastrado com sucesso!");
+        }
+
+        function removerProduto(index) {
+            if(confirm(`Tem certeza que deseja remover o produto "${dbProdutos[index].nome}"?`)) {
+                dbProdutos.splice(index, 1);
+                localStorage.setItem('bancoProdutos', JSON.stringify(dbProdutos));
+                atualizarTabela();
+            }
+        }
+    </script>
+</body>
+</html>

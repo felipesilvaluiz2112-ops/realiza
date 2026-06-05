@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<produtos>
+    <produto>
+        <categoria>feminino</categoria>
+        <nome>Vestido Minimalist Green</nome>
+        <preco>159.90</preco>
+        <imagem>https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=500</imagem>
+        <descricao>Vestido leve de algodão orgânico, ideal para dias quentes. Possui caimento fluido.</descricao>
+        <promocao>Novidade</promocao>
+    </produto>
+    <produto>
+        <categoria>feminino</categoria>
+        <nome>Blusa Seda Soft</nome>
+        <preco>119.90</preco>
+        <imagem>https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500</imagem>
+        <descricao>Blusa elegante em seda acetinada com caimento fluido e toque macio.</descricao>
+        <promocao>15% OFF</promocao>
+    </produto>
+    <produto>
+        <categoria>feminino</categoria>
+        <nome>Blusa Seda Soft</nome>
+        <preco>119.90</preco>
+        <imagem>https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500</imagem>
+        <descricao>Blusa elegante em seda acetinada com caimento fluido e toque macio.</descricao>
+        <promocao>15% OFF</promocao>
+    </produto>
+
+    <produto>
+        <categoria>masculino</categoria>
+        <nome>Sobretudo Elegance</nome>
+        <preco>299.90</preco>
+        <imagem>https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500</imagem>
+        <descricao>Sobretudo masculino de lã batida premium. Perfeito para o inverno.</descricao>
+        <promocao>Destaque</promocao>
+    </produto>
+<produto>
+        <categoria>masculino</categoria>
+        <nome>Sobretudo Elegance</nome>
+        <preco>299.90</preco>
+        <imagem>https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500</imagem>
+        <descricao>Sobretudo masculino de lã batida premium. Perfeito para o inverno.</descricao>
+        <promocao>Destaque</promocao>
+    </produto>
+    <produto>
+        <categoria>infantil</categoria>
+        <nome>Conjunto Kids Comfort</nome>
+        <preco>89.90</preco>
+        <imagem>https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=500</imagem>
+        <descricao>Conjunto de moletom infantil super macio e confortável para o dia a dia.</descricao>
+        <promocao>Oferta</promocao>
+    </produto>
+
+    <produto>
+        <categoria>acessorios</categoria>
+        <nome>Bolsa Urban Leather</nome>
+        <preco>120.00</preco>
+        <imagem>https://images.unsplash.com/photo-1544816155-12df9643f363?w=500</imagem>
+        <descricao>Bolsa transversal moderna em couro ecológico.</descricao>
+        <promocao>Últimas Peças</promocao>
+    </produto>
+    <produto>
+        <categoria>acessorios</categoria>
+        <nome>Bolsa Urban Leathersasasa</nome>
+        <preco>120.00</preco>
+        <imagem>https://images.unsplash.com/photo-1544816155-12df9643f363?w=500</imagem>
+        <descricao>Bolsa transversal moderna em couro ecológico.</descricao>
+        <promocao>Últimas Peças</promocao>
+    </produto>
+</produtos>

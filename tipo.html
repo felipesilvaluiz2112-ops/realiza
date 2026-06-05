@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REALIZA Fashion - Categorias (Tipos)</title>
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <link rel="stylesheet" href="estilo.css?v=1.0.1">
+    
+    <style>
+        .nav-inferior {
+            position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--azul-marinho);
+            border-top: 3px solid var(--dourado); display: flex; justify-content: space-around;
+            align-items: center; padding: 12px 0; z-index: 999;
+        }
+        .btn-nav-inf {
+            background: none; border: none; color: white; font-weight: bold; font-size: 1em;
+            cursor: pointer; text-decoration: none; flex: 1; text-align: center;
+        }
+        .btn-nav-inf:hover, .btn-nav-inf.ativo { color: var(--dourado); }
+        body { padding-bottom: 90px; background-color: var(--cinza-claro); color: var(--texto-escuro); }
+        .btn-fale-conosco { bottom: 80px !important; }
+
+        .container-filtros { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 30px 0; padding: 0 10px; }
+        .btn-filtro {
+            background-color: var(--branco); color: var(--azul-marinho); border: 2px solid var(--azul-marinho);
+            padding: 12px 24px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: all 0.2s ease;
+        }
+        .btn-filtro:hover, .btn-filtro.ativo { background-color: var(--azul-marinho); color: var(--branco); }
+
+        .secao-categoria { display: none; }
+        .secao-categoria.ativa { display: block; }
+
+        .vitrine {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .foto-roupa { width: 100%; height: 220px; object-fit: contain; background-color: #f8fafc; cursor: pointer; }
+
+        .card-produto {
+            background-color: var(--branco); border-radius: 12px; overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05); transition: transform 0.3s;
+            text-align: center; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between;
+            position: relative;
+        }
+
+        .info-produto { padding: 15px; cursor: pointer; }
+
+        .btn-adicionar-direto {
+            background-color: var(--azul-marinho); color: white; border: none; padding: 12px;
+            font-weight: bold; cursor: pointer; width: 100%; transition: background 0.2s; font-size: 1em;
+        }
+        .btn-adicionar-direto:hover { background-color: var(--dourado); color: var(--azul-marinho); }
+
+        .janela-explicacao {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(10, 25, 47, 0.7); z-index: 2000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .conteudo-explicacao { background-color: white; padding: 30px; border-radius: 12px; max-width: 500px; width: 100%; position: relative; text-align: center; }
+        .fechar-explicacao { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: #888; }
+        .img-detalhe { width: 100%; max-height: 250px; object-fit: contain; border-radius: 8px; margin-bottom: 15px; }
+        .desc-texto { color: #555; line-height: 1.6; margin: 15px 0; text-align: left; background: #f8fafc; padding: 15px; border-radius: 6px; }
+        .alerta-carrinho { display: none; position: fixed; top: 20px; right: 20px; background-color: #0a192f; color: white; padding: 15px 25px; border-radius: 8px; font-weight: bold; z-index: 3000; border: 2px solid var(--dourado); }
+    </style>
+</head>
+<body>
+
+    <header style="background-color: var(--azul-marinho); border-bottom: 5px solid var(--dourado); text-align: center; color: white; padding: 20px;">
+        <img src="logo.jpg" alt="Logo REALIZA" class="logo-site" style="border: 2px solid var(--dourado); border-radius: 50%; max-width: 140px;">
+        <h1>REALIZA Fashion - Coleções</h1>
+    </header>
+
+    <div id="alerta" class="alerta-carrinho">✅ Item adicionado ao carrinho!</div>
+
+    <main style="max-width: 1100px; margin: auto; padding: 20px;">
+        <h2 style="color: var(--azul-marinho); text-align: center; border-bottom: 3px solid var(--dourado); padding-bottom: 10px;">Nossos Tipos de Roupas</h2>
+
+        <div class="container-filtros">
+            <button class="btn-filtro ativo" onclick="abrirInscricao('feminino', this)">Feminino</button>
+            <button class="btn-filtro" onclick="abrirInscricao('masculino', this)">Masculino</button>
+            <button class="btn-filtro" onclick="abrirInscricao('infantil', this)">Infantil</button>
+            <button class="btn-filtro" onclick="abrirInscricao('acessorios', this)">Acessórios</button>
+        </div>
+
+        <div id="cat-feminino" class="secao-categoria ativa">
+            <h3 style="text-align:center; color: var(--azul-marinho);">✨ Coleção Feminina</h3>
+            <div class="vitrine"></div>
+        </div>
+
+        <div id="cat-masculino" class="secao-categoria">
+            <h3 style="text-align:center; color: var(--azul-marinho);">✨ Coleção Masculina</h3>
+            <div class="vitrine"></div>
+        </div>
+
+        <div id="cat-infantil" class="secao-categoria">
+            <h3 style="text-align:center; color: var(--azul-marinho);">✨ Coleção Infantil</h3>
+            <div class="vitrine"></div>
+        </div>
+
+        <div id="cat-acessorios" class="secao-categoria">
+            <h3 style="text-align:center; color: var(--azul-marinho);">✨ Acessórios</h3>
+            <div class="vitrine"></div>
+        </div>
+    </main>
+
+    <div id="modalExplicacao" class="janela-explicacao">
+        <div class="conteudo-explicacao">
+            <span class="fechar-explicacao" onclick="fecharExplicacao()">&times;</span>
+            <img id="modalImg" src="" class="img-detalhe">
+            <h3 id="modalNome" style="color: var(--azul-marinho); margin: 5px 0;"></h3>
+            <span id="modalPromo" style="background-color: var(--azul-marinho); color: white; padding: 3px 10px; border-radius: 20px; font-size: 0.8em;"></span>
+            <div class="desc-texto">
+                <strong>📋 Descrição da Peça:</strong>
+                <p id="modalDesc" style="margin: 5px 0 0 0;"></p>
+            </div>
+            <h4 style="font-size: 1.4em; color: var(--texto-escuro); margin: 10px 0;" id="modalPreco"></h4>
+            <button class="btn-comprar" id="btnAdicionarModal" style="background-color: var(--dourado); color: var(--azul-marinho); font-weight: bold; padding: 12px; width: 100%; border: none; border-radius: 6px; cursor: pointer;">🛒 Adicionar ao Carrinho</button>
+        </div>
+    </div>
+
+    <nav class="nav-inferior">
+        <a href="index.html" class="btn-nav-inf">🏠 Início</a>
+        <a href="tipo.html" class="btn-nav-inf ativo">🏷️ Tipo</a>
+        <a href="historia.html" class="btn-nav-inf">📖 História</a>
+    </nav>
+
+    <script>
+        let carrinhoTemporario = JSON.parse(localStorage.getItem('carrinhoCompartilhado')) || [];
+
+        window.onload = function() {
+            carregarProdutosDoXML();
+        };
+
+        function carregarProdutosDoXML() {
+            // Criamos um parâmetro de tempo único (?_=[timestamp]) para que o browser entenda que o XML é sempre novo
+            let urlSemCache = 'produtos.xml?_=' + new Date().getTime();
+
+            // Adicionado a propriedade 'cache: "no-store"' para obrigar o fetch a buscar do servidor diretamente
+            fetch(urlSemCache, { cache: "no-store" })
+                .then(response => response.text())
+                .then(data => {
+                    let parser = new DOMParser();
+                    let xmlDoc = parser.parseFromString(data, "text/xml");
+                    let produtos = xmlDoc.getElementsByTagName("produto");
+
+                    document.querySelectorAll('.vitrine').forEach(v => v.innerHTML = '');
+
+                    for (let i = 0; i < produtos.length; i++) {
+                        let categoria = produtos[i].getElementsByTagName("categoria")[0].textContent.trim();
+                        let nome = produtos[i].getElementsByTagName("nome")[0].textContent;
+                        let preco = parseFloat(produtos[i].getElementsByTagName("preco")[0].textContent);
+                        let imagem = produtos[i].getElementsByTagName("imagem")[0].textContent;
+                        let descricao = produtos[i].getElementsByTagName("descricao")[0].textContent;
+                        let promocao = produtos[i].getElementsByTagName("promocao")[0].textContent;
+
+                        let cardHTML = `
+                            <div class="card-produto">
+                                <span class="tag-promocao" style="background-color: var(--dourado); color: var(--azul-marinho); position:absolute; top:10px; left:10px; padding:4px 10px; font-size:0.8em; font-weight:bold; border-radius:20px;">${promocao}</span>
+                                <img src="${imagem}" class="foto-roupa" onclick="mostrarExplicacao('${nome.replace(/'/g, "\\'")}', ${preco}, '${imagem}', '${descricao.replace(/'/g, "\\'")}', '${promocao}')">
+                                <div class="info-produto" onclick="mostrarExplicacao('${nome.replace(/'/g, "\\'")}', ${preco}, '${imagem}', '${descricao.replace(/'/g, "\\'")}', '${promocao}')">
+                                    <h3>${nome}</h3>
+                                    <p style="font-size:1.3em; color:var(--azul-marinho); font-weight:bold; margin:5px 0;">R$ ${preco.toFixed(2)}</p>
+                                </div>
+                                <button class="btn-adicionar-direto" onclick="salvarNoCarrinho('${nome.replace(/'/g, "\\'")}', ${preco})">🛒 Adicionar ao Carrinho</button>
+                            </div>
+                        `;
+
+                        let containerVitrine = document.querySelector(`#cat-${categoria} .vitrine`);
+                        if (containerVitrine) {
+                            containerVitrine.innerHTML += cardHTML;
+                        }
+                    }
+                })
+                .catch(error => console.error("Erro ao processar a lista XML:", error));
+        }
+
+        function abrirInscricao(categoryId, botaoClicado) {
+            document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
+            botaoClicado.classList.add('ativo');
+            document.querySelectorAll('.secao-categoria').forEach(secao => secao.classList.remove('ativa'));
+            document.getElementById('cat-' + categoryId).classList.add('ativa');
+        }
+
+        function mostrarExplicacao(nome, preco, img, descricao, promocao) {
+            document.getElementById('modalNome').innerText = nome;
+            document.getElementById('modalPreco').innerText = `R$ ${preco.toFixed(2)}`;
+            document.getElementById('modalImg').src = img;
+            document.getElementById('modalDesc').innerText = descricao;
+            document.getElementById('modalPromo').innerText = promocao;
+            document.getElementById('btnAdicionarModal').onclick = function() { salvarNoCarrinho(nome, preco); };
+            document.getElementById('modalExplicacao').style.display = 'flex';
+        }
+
+        function fecharExplicacao() { document.getElementById('modalExplicacao').style.display = 'none'; }
+
+        function salvarNoCarrinho(nome, preco) {
+            carrinhoTemporario = JSON.parse(localStorage.getItem('carrinhoCompartilhado')) || [];
+            carrinhoTemporario.push({ nome: nome, preco: preco });
+            localStorage.setItem('carrinhoCompartilhado', JSON.stringify(carrinhoTemporario));
+            
+            fecharExplicacao();
+            const alerta = document.getElementById('alerta');
+            alerta.style.display = 'block';
+            setTimeout(() => { alerta.style.display = 'none'; }, 2000);
+        }
+    </script>
+</body>
+</html>
